@@ -33,18 +33,14 @@ def keyfind(command , message):
                 if i == command:
                         return r.Random.choice( random , message[i])
 
-def check_word(wordlist , data , alldata):
+def check_word(wordlist , data):
         found = True
         data = str(data).rstrip("?")
         datalist = str(data).split()
-        for i in wordlist:
-                if i in datalist:
-                        if i in alldata[0]:
-                                found = True
-                                continue
-                        else:
-                                found = True
-                                continue
+        for i in datalist:
+                if i in wordlist:
+                        found = True
+                        continue
                 else:
                         found = False
                         break
@@ -77,9 +73,9 @@ def checkdata(question):
         reader = list(csv.reader(file))
         file.close() 
         for data in reader:
-                found = check_word(question , data[1].lower() , data)
+                found = check_word(question , data[0].lower())
                 if found == True:
-                        return data
+                        return data[1]
         else:
                 return "none"
                                                                              
@@ -91,7 +87,8 @@ def question_data(command):
                 question_number = 1
         with open(r"D:\AIproject\question.txt" , "a") as file:
                 file.write(f"{question_number}.'{command}'\n")
-        file1.close()
+        if question_number != 1:
+                file1.close()
 def take_command():
                 r = sr.Recognizer()
                 while True:
@@ -129,6 +126,10 @@ def mainprogram():
             speak("opening youtube")
             open_youtube()
 
+        elif "+" in command or "-" in command and  "*" in command or "/" in command and "equal" in command:
+                for i in command.split():
+                        pass
+                
         elif command == "open google":
             speak("opening google")
             open_google()
@@ -200,11 +201,11 @@ def mainprogram():
 
         else:
             command = command.rstrip("?")
-            command = command.split()
-            answer = checkdata(command)
+            command1 = command.split()
+            answer = str(checkdata(command1))
             if answer != "none":
-                    print(answer[2])
-                    speak(answer[2])
+                    print(answer)
+                    speak(answer)
             else:
                 speak("i have not information about that")
                 question_data(command)
