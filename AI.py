@@ -23,7 +23,7 @@ message = {"hello":["hello sir" , "welcome sir" , "hy sir"] ,
            "hi jarvis":["hello sir" , "welcome sir" , "hy sir"] ,
            "hi":["hello sir" , "welcome sir" , "hy sir"]}
 fileextansion = {"text":"txt","python":"py"}
-
+path = os.getcwd()
 def  speak(audio):
                 engine.say(audio)
                 engine.runAndWait()
@@ -50,7 +50,7 @@ def check_word(wordlist , data):
                 return False
         
 def jokes():
-        file = open(r'D:\AIproject\jokes.csv' , "r")
+        file = open(f'{path}\\jokes.csv' , "r")
         randomcount = r.randint(1,38269)
         jokes = csv.reader(file)
         jokeslist = list(jokes) 
@@ -69,7 +69,7 @@ def click_picture(open = True):
                                 cv2.imshow(win,img)
                                 
 def checkdata(question):
-        file  = open(r"D:\AIproject\QAp.csv" , "r")
+        file  = open(f"{path}\\QAp.csv" , "r")
         reader = list(csv.reader(file))
         file.close() 
         for data in reader:
@@ -81,11 +81,11 @@ def checkdata(question):
                                                                              
 def question_data(command):
         try:
-            file1 = open(r"D:\AIproject\question.txt" , "r")
+            file1 = open(f"{path}\\question.txt" , "r")
             question_number = len(file1.readlines())
         except Exception:
                 question_number = 1
-        with open(r"D:\AIproject\question.txt" , "a") as file:
+        with open(f"{path}\\question.txt" , "a") as file:
                 file.write(f"{question_number}.'{command}'\n")
         if question_number != 1:
                 file1.close()
@@ -117,9 +117,9 @@ def take_command():
                     return query
 
 def mainprogram():
-    '''command = take_command()
-    if command == "none":'''   
-    command = input("give me command:")
+    command = take_command()
+    if command == "none":  
+       command = input("give me command:")
     command = command.lower()
     if command != "none":
         if command == "open youtube":
@@ -179,7 +179,7 @@ def mainprogram():
                                 speak("give me a file name")
                                 filename = input("give me a file name:")
                                 speak(f"{filename} is making")
-                                open(f"D:\\AIproject\\{filename}.{fileextansion[i]}" , "+a")
+                                open(f"{path}\\{filename}.{fileextansion[i]}" , "+a")
                                 break
                 else:
                     speak("i can't make this file")
