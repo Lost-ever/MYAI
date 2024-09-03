@@ -114,6 +114,8 @@ def take_command():
                         continue
                     except OSError:
                             return "none"
+                    except Exception as e:
+                            retrun "none"
                     return query
 
 def mainprogram():
